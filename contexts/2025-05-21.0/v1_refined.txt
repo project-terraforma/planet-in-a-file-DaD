@@ -1,38 +1,171 @@
-OVERTURE MAPS FOUNDATION DATA CONTEXT
+================================================================================
+OVERTURE MAPS INTELLIGENCE SUMMARY (V1 REFINED)
 RELEASE: 2025-05-21.0
-GENERATED: 2026-03-11
-
 ================================================================================
-GLOBAL STATISTICS
-  - Total Records: 4,255,185,711
-  - Themes Count: 6
 
-DETAILED THEME BREAKDOWN
-  - ADDRESSES: 446,766,672 records
-    * Top Sources: br_ibge (89,899,299), NAD (78,599,358), OpenAddresses/AddressForAll/INEGI (30,278,896)
-    * Highlights: country_count (100.00%), address_levels_count (100.00%), number_count (99.32%)
-  - BASE: 418,906,047 records
-    * Top Sources: OpenStreetMap (295,543,873), ESA WorldCover (123,302,114), ETOPO/GLOBathy (60,060)
-    * Highlights: subtype_count (99.99%), class_count (70.55%), source_tags_count (70.34%)
-  - BUILDINGS: 2,625,549,693 records
-    * Top Sources: Google Open Buildings (988,943,874), Microsoft ML Buildings (733,533,309), OpenStreetMap (560,082,060)
-    * Highlights: is_underground_count (100.00%), has_parts_count (99.87%), height_count (7.33%)
-  - DIVISIONS: 5,505,067 records
-    * Top Sources: OpenStreetMap (5,469,675), geoBoundaries (28,347), Esri Community Maps,OpenStreetMap (5,973)
-    * Highlights: subtype_count (100.00%), country_count (99.99%), region_count (98.66%)
-  - PLACES: 61,681,819 records
-    * Top Sources: meta (53,765,036), Microsoft (5,156,084), Microsoft,meta (2,640,326)
-    * Highlights: names_count (100.00%), categories_count (100.00%), confidence_count (100.00%)
-  - TRANSPORTATION: 696,776,413 records
-    * Top Sources: OpenStreetMap (696,551,619), TomTom (224,794)
-    * Highlights: subtype_count (46.15%), connectors_count (46.15%), class_count (45.91%)
+SECTION 1 — CONTEXT OVERVIEW
+---------------------------------------------------------------------------------------------------------------
 
-TOP COUNTRIES OVERALL
-  - US: 11,884,377
-  - BR: 5,029,839
-  - IN: 3,892,038
-  - MX: 2,770,714
-  - GB: 2,233,739
+WHAT IS OVERTURE MAPS? 
+Overture Maps is an open data initiative meant to make geospatial data accessible world-wide. Users can browse
+buildings, roads, places, and more. Data is downloadable as GeoJSON Files and can be queried using DuckDB.
 
-================================================================================
-STRICT ANALYST MODE: Use only the figures above for verification.
+WHAT IS THE DATASET BEING USED?
+
+Typically all-encompassing Overture Maps Data is large and uses hive-partitioned parquet files. The dataset 
+used for this context file is the *Metrics* dataset. This dataset is also large and cannot be added within
+a prompt window, but serves as a summary/aggregation of the map data. All statistics and data information comes
+from the Metrics dataset.
+
+DATA SUMMARY:
+You'll be given a particular month's context file and be able to view a high-level yet informational summary of
+the current data in the Overture Maps Dataset. It provides aggregated metrics that describe dataset coverage, 
+attribute availability, and theme-level statistics. In the metrics dataset, a row usually represents an aggregated count over a group
+of features rather than an individual map feature.
+
+YOUR ROLE AS THE LLM:
+You are a bookeeper and analyst of the Overture Maps Metrics Dataset. Given a user's questions, you will retrieve answers
+that you know, with expertise. 
+
+RULES:
+1. Only use information contained in this context file.
+2. If a statistic is not present, say : "information is currently unavailable".
+3. When answering, reference specific numbers from the dataset.
+4. Do not infer values that are not explicitly provided.
+5. Do not add on additional knowledge from other sources, or assumptions.
+6. Treat example user queries as demonstrations of format only, not as reusable answers.
+
+
+---------------------------------------------------------------------------------------------------------------
+SECTION 2 — DATASET STRUCTURE
+---------------------------------------------------------------------------------------------------------------
+
+TOTAL THEMES
+6
+
+THEMES INCLUDED
+- buildings
+- addresses
+- transportation
+- places
+- base
+- divisions
+
+COMMON ATTRIBUTES ACROSS THEMES
+datasets
+change_type
+id_count
+geometry_count
+bbox_count
+version_count
+sources_count
+total_count
+theme
+type
+
+COMMON ATTRIBUTE DEFINITIONS
+id_count: Number of unique feature IDs in the grouping
+geometry_count: Number of geometries present
+bbox_count: Number of bounding boxes available
+sources_count: Number of data sources contributing to the records
+total_count: Total aggregated records for the grouping
+address_level_1: Administrative division level 1 (e.g. State, Province)
+address_level_2: Administrative division level 2 (e.g. County, City)
+
+IMPORTANT DATA FILTERING RULE
+Unless explicitly stated otherwise, all statistics exclude rows where change_type = removed.
+The only section where removed rows are included is: Change Type Distribution.
+
+AVAILABLE STATISTICS
+
+Theme-level Statistics:
+- total records
+- property coverage
+- top datasets
+- top class values
+- top subtype values
+- change type distribution
+
+Global Statistics:
+- largest themes
+- total records across all themes
+- top countries
+
+KEY NOTES
+- Metrics represent counts aggregated from the metrics dataset
+
+---------------------------------------------------------------------------------------------------------------
+
+SECTION 3 — THEME-SPECIFIC INTELLIGENCE
+--------------------------------------
+### ADDRESSES
+Total Records: 446,766,672
+Types: address
+Top Sources: br_ibge (89,899,299), NAD (78,599,358), OpenAddresses/AddressForAll/INEGI (30,278,896)
+Key Coverage: country_count (100.00%), address_levels_count (100.00%), number_count (99.32%)
+
+### BASE
+Total Records: 418,906,047
+Types: land, land_cover, bathymetry, land_use, infrastructure, water
+Top Sources: OpenStreetMap (295,543,873), ESA WorldCover (123,302,114), ETOPO/GLOBathy (60,060)
+Key Coverage: subtype_count (99.99%), class_count (70.55%), source_tags_count (70.34%)
+
+### BUILDINGS
+Total Records: 2,625,549,693
+Types: building, building_part
+Top Sources: Google Open Buildings (988,943,874), Microsoft ML Buildings (733,533,309), OpenStreetMap (560,082,060)
+Key Coverage: is_underground_count (100.00%), has_parts_count (99.87%), height_count (7.33%)
+
+### DIVISIONS
+Total Records: 5,505,067
+Types: division_area, division_boundary, division
+Top Sources: OpenStreetMap (5,469,675), geoBoundaries (28,347), Esri Community Maps,OpenStreetMap (5,973)
+Key Coverage: subtype_count (100.00%), country_count (99.99%), region_count (98.66%)
+
+### PLACES
+Total Records: 61,681,819
+Types: place
+Top Sources: meta (53,765,036), Microsoft (5,156,084), Microsoft,meta (2,640,326)
+Key Coverage: names_count (100.00%), categories_count (100.00%), confidence_count (100.00%)
+Top Countries by Record Count:
+- US: 11,884,377
+- BR: 5,029,839
+- IN: 3,892,038
+- MX: 2,770,714
+- GB: 2,233,739
+
+### TRANSPORTATION
+Total Records: 696,776,413
+Types: segment, connector
+Top Sources: OpenStreetMap (696,551,619), TomTom (224,794)
+Key Coverage: subtype_count (46.15%), connectors_count (46.15%), class_count (45.91%)
+
+SECTION 4 — GLOBAL SUMMARY
+---------------------------------------------------------------------------------------------------------------
+
+Total Records: 4,255,185,711
+Total Themes: 6
+Total Unique Types Across Themes: 15
+
+Largest Themes by Record Count
+- buildings: 2,625,549,693
+- transportation: 696,776,413
+- addresses: 446,766,672
+- base: 418,906,047
+- places: 61,681,819
+- divisions: 5,505,067
+
+Top Countries Overall:
+  US (11,884,377), BR (5,029,839), IN (3,892,038), MX (2,770,714), GB (2,233,739)
+
+SECTION 5 — EXAMPLE USER QUERIES
+---------------------------------------------------------------------------------------------------------------
+
+User: Which country has the most address records?
+Answer: The United States has the highest number of address records with [VALUE] entries.
+
+User: What are the top categories in the places theme?
+Answer: Restaurant, Cafe, and Hotel are among the most common categories.
+
+User: What percentage of buildings contain height data?
+Answer: [VALUE]% of buildings include height information

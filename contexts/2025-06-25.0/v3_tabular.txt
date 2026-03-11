@@ -1,39 +1,167 @@
-# Overture Maps Release 2025-06-25.0 Summary
+# Overture Maps Release 2025-06-25.0 Tabular Intelligence
 
-## Core Metrics
-**Total Records:** 4,191,387,338 | **Themes:** 6
+## [META] Context & Rules
+SECTION 1 — CONTEXT OVERVIEW
+---------------------------------------------------------------------------------------------------------------
 
-## Theme Details
-| Theme | Total Count | Top Classes | Top Subtypes |
+WHAT IS OVERTURE MAPS? 
+Overture Maps is an open data initiative meant to make geospatial data accessible world-wide. Users can browse
+buildings, roads, places, and more. Data is downloadable as GeoJSON Files and can be queried using DuckDB.
+
+WHAT IS THE DATASET BEING USED?
+
+Typically all-encompassing Overture Maps Data is large and uses hive-partitioned parquet files. The dataset 
+used for this context file is the *Metrics* dataset. This dataset is also large and cannot be added within
+a prompt window, but serves as a summary/aggregation of the map data. All statistics and data information comes
+from the Metrics dataset.
+
+DATA SUMMARY:
+You'll be given a particular month's context file and be able to view a high-level yet informational summary of
+the current data in the Overture Maps Dataset. It provides aggregated metrics that describe dataset coverage, 
+attribute availability, and theme-level statistics. In the metrics dataset, a row usually represents an aggregated count over a group
+of features rather than an individual map feature.
+
+YOUR ROLE AS THE LLM:
+You are a bookeeper and analyst of the Overture Maps Metrics Dataset. Given a user's questions, you will retrieve answers
+that you know, with expertise. 
+
+RULES:
+1. Only use information contained in this context file.
+2. If a statistic is not present, say : "information is currently unavailable".
+3. When answering, reference specific numbers from the dataset.
+4. Do not infer values that are not explicitly provided.
+5. Do not add on additional knowledge from other sources, or assumptions.
+6. Treat example user queries as demonstrations of format only, not as reusable answers.
+
+
+---------------------------------------------------------------------------------------------------------------
+SECTION 2 — DATASET STRUCTURE
+---------------------------------------------------------------------------------------------------------------
+
+TOTAL THEMES
+6
+
+THEMES INCLUDED
+- divisions
+- addresses
+- transportation
+- buildings
+- places
+- base
+
+COMMON ATTRIBUTES ACROSS THEMES
+datasets
+change_type
+id_count
+geometry_count
+bbox_count
+version_count
+sources_count
+total_count
+theme
+type
+
+COMMON ATTRIBUTE DEFINITIONS
+id_count: Number of unique feature IDs in the grouping
+geometry_count: Number of geometries present
+bbox_count: Number of bounding boxes available
+sources_count: Number of data sources contributing to the records
+total_count: Total aggregated records for the grouping
+address_level_1: Administrative division level 1 (e.g. State, Province)
+address_level_2: Administrative division level 2 (e.g. County, City)
+
+IMPORTANT DATA FILTERING RULE
+Unless explicitly stated otherwise, all statistics exclude rows where change_type = removed.
+The only section where removed rows are included is: Change Type Distribution.
+
+AVAILABLE STATISTICS
+
+Theme-level Statistics:
+- total records
+- property coverage
+- top datasets
+- top class values
+- top subtype values
+- change type distribution
+
+Global Statistics:
+- largest themes
+- total records across all themes
+- top countries
+
+KEY NOTES
+- Metrics represent counts aggregated from the metrics dataset
+
+---------------------------------------------------------------------------------------------------------------
+
+## [DATA] Themes & Key Values
+| Theme | Total Count | Class/Categories (Top 3) | Subtypes/Levels (Top 3) |
 | :--- | :--- | :--- | :--- |
-| addresses | 446,544,475 |  |  |
-| base | 433,775,781 | tree, stream | power, shrub |
-| buildings | 2,537,908,430 | house, residential | residential, outbuilding |
-| divisions | 5,519,182 | hamlet, village | locality, neighborhood |
-| places | 64,367,210 |  |  |
-| transportation | 703,272,260 | residential, service | road, rail |
+| addresses | 446,544,475 | SP, CA, FL | São Paulo, UNINCORPORATED, Rio de Janeiro |
+| base | 433,775,781 | tree, stream, power_tower | power, shrub, forest |
+| buildings | 2,537,908,430 | house, residential, detached | residential, outbuilding, agricultural |
+| divisions | 5,519,182 | hamlet, village, land | locality, neighborhood, microhood |
+| places | 64,367,210 | professional_services, beauty_salon, restaurant |  |
+| transportation | 703,272,260 | residential, service, unclassified | road, rail, water |
 
-## Property Coverage highlights
-| Theme | Metric | Coverage |
+## [DATA] Property Coverage Metrics
+| Theme | Measurement | Availability % |
 | :--- | :--- | :--- |
 | addresses | country_count | 100.00% |
 | addresses | address_levels_count | 100.00% |
+| addresses | number_count | 99.32% |
+| addresses | street_count | 98.37% |
+| addresses | postcode_count | 73.11% |
 | base | subtype_count | 99.99% |
 | base | class_count | 71.56% |
+| base | names_count | 71.56% |
+| base | source_tags_count | 71.35% |
+| base | cartography_count | 28.44% |
 | buildings | is_underground_count | 100.00% |
 | buildings | has_parts_count | 99.87% |
+| buildings | height_count | 7.57% |
+| buildings | subtype_count | 5.27% |
+| buildings | class_count | 5.20% |
 | divisions | subtype_count | 100.00% |
 | divisions | country_count | 99.99% |
+| divisions | region_count | 98.66% |
+| divisions | names_count | 98.41% |
+| divisions | local_type_count | 79.79% |
 | places | names_count | 100.00% |
 | places | categories_count | 100.00% |
+| places | confidence_count | 100.00% |
+| places | addresses_count | 100.00% |
+| places | socials_count | 92.49% |
 | transportation | subtype_count | 46.12% |
 | transportation | connectors_count | 46.12% |
+| transportation | class_count | 46.12% |
+| transportation | names_count | 13.02% |
+| transportation | road_surface_count | 12.20% |
 
-## Top Countries
-| Rank | Country | Records |
-| :---: | :--- | :---: |
-| 1 | US | 12,593,796 |
-| 2 | BR | 5,124,169 |
-| 3 | IN | 3,979,759 |
-| 4 | MX | 2,822,650 |
-| 5 | GB | 2,381,132 |
+## [GLOBAL] Statistics
+---------------------------------------------------------------------------------------------------------------
+
+Total Records: 4,191,387,338
+Total Themes: 6
+Total Unique Types Across Themes: 15
+
+Largest Themes by Record Count
+- buildings: 2,537,908,430
+- transportation: 703,272,260
+- addresses: 446,544,475
+- base: 433,775,781
+- places: 64,367,210
+- divisions: 5,519,182
+
+## [EXAMPLES] Reference Queries
+SECTION 5 — EXAMPLE USER QUERIES
+---------------------------------------------------------------------------------------------------------------
+
+User: Which country has the most address records?
+Answer: The United States has the highest number of address records with [VALUE] entries.
+
+User: What are the top categories in the places theme?
+Answer: Restaurant, Cafe, and Hotel are among the most common categories.
+
+User: What percentage of buildings contain height data?
+Answer: [VALUE]% of buildings include height information
