@@ -13,7 +13,7 @@ def main():
     month = args.month
     
     # Define paths relative to the Next.js project root
-    script_dir = Path(__file__).resolve().parent
+    script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
     # Input data from the Next.js project structure
