@@ -1,41 +1,85 @@
-# Dashboards are Dead: Overture Maps Intelligence
+# Dashboards Are Dead: Planet-Fetch
 
-**Dashboards are Dead** is an AI-first intelligence tool designed to convert massive, complex Overture Maps Foundation metrics into concise, LLM-readable context. Instead of staring at static charts, users generate a grounded "fact sheet" that allows AI models like ChatGPT or Claude to answer data questions with 100% accuracy.
+## Contributors
+- **Simran Kaur**
+- **Aashna Shimkhada**
 
-## 🚀 Project Status: Progress Report
-
-This project is currently in the **Implementation & Optimization** phase. Below is a breakdown of our progress against the core OKRs.
-
-### Objective 1: Build a Grounded Context File
-- [x] **Data Integration**: Successfully implemented a streaming CSV parser that aggregates 2.3GB of raw metrics across themes (buildings, places, etc.) and countries.
-- [x] **LLM-Readable Output**: Developed a hierarchical text format that prioritizes "ground truth" statistics for LLMs.
-- [ ] **Validation Architecture**: (In Progress) Building scripts to verify computed counts against filtered baseline metrics (<2% discrepancy target).
-
-### Objective 2: Optimize Conversational UX
-- [x] **Premium Dashboard**: Built a modern Next.js interface using Framer Motion and Lucide icons for a high-end "intelligence" feel.
-- [x] **Workflow Automation**: One-click generation of `context.txt` from raw folder structures.
-- [ ] **Prompt Library**: Pending development of a template library for specific query types (e.g., trend analysis, schema lookup).
-
-### Objective 3: Evaluation & Recommendation
-- [ ] **Benchmarking**: Pending token usage and hallucination rate comparisons between different context formats (YAML vs. Text).
+**Course:** CRWN 102 – Corporate Innovation  
+**Partner:** Overture Maps Foundation
 
 ---
 
-## 🛠️ Still to Work On (Roadmap)
+## Overview
 
-1.  **Cloud Data Migration**: Transition the 2.3GB local `metrics` folder to a production-ready database or cloud storage (e.g., Supabase or AWS S3) to enable full Vercel functionality.
-2.  **Automated Accuracy Checks**: Implement a 10-question evaluation suite to verify that LLMs can answer correctly using *only* the generated context.
-3.  **Interactive "Chat" Preview**: Add an in-app chat bubble where users can test the generated context immediately without leaving the dashboard.
-4.  **Multi-Format Export**: Add support for JSON and YAML exports for advanced AI benchmarking.
+**Planet-Fetch** is an AI-first website that provides a centralized hub for generating and accessing **LLM-readable context files** derived from the Overture Maps Foundation metrics dataset.
+
+Instead of manually analyzing large datasets, users can generate structured context files that allow AI models such as ChatGPT or Claude to answer questions about the data accurately.
+
+The platform processes **2.3GB+ of Overture metrics data** and converts it into structured, hierarchical summaries optimized for large language models.
 
 ---
 
-## 💻 Technical Setup
+## Key Idea
 
-### Local Development
-1. Clone the repository.
-2. Ensure the `metrics` folder is present in the root (Note: Ignored by Git due to size).
-3. Run `npm install` and `npm run dev`.
+Planet-Fetch transforms complex geospatial metrics into **LLM-ready context files** that contain:
 
-### Deployment Note
-Deployments to **Vercel** are UI-ready. However, since the 2.3GB metrics data is excluded from Git, the API processing functionality requires a connected cloud database for production use.
+- dataset statistics  
+- schema descriptions  
+- theme summaries  
+- aggregated metrics  
+- structured ground-truth information
+
+These context files allow AI systems to answer questions **using only verified dataset information**, improving accuracy and reducing hallucinations.
+
+---
+
+## Features
+
+- Centralized **web hub for generating and accessing context files**
+- Processing pipeline for **2.3GB+ Overture metrics dataset**
+- Hierarchical **LLM-optimized context format**
+- Modern **Next.js web interface**
+- One-click generation of `context.txt`
+- Structured summaries of Overture dataset themes
+- Support for conversational exploration with AI models
+
+---
+
+## Context Validation & Testing
+
+To ensure the reliability of the generated context files, the project includes **validation and evaluation testing**.
+
+Testing includes:
+
+- verifying computed dataset counts against baseline metrics
+- evaluating whether LLMs can correctly answer dataset questions using **only the generated context**
+- checking for discrepancies between filtered metrics and aggregated statistics
+
+This testing ensures the generated context remains **accurate, grounded, and usable for AI-driven analysis**.
+
+---
+
+## Documentation
+
+All project documentation is located in the **`docs/` folder**.
+
+This includes:
+
+- project setup instructions  
+- dataset schema explanations  
+- pipeline workflow documentation  
+- Overture Maps theme descriptions  
+
+Refer to the documentation folder for detailed instructions on running the pipeline and understanding the dataset structure.
+
+---
+
+## Project Structure
+
+*(Paste project structure or schema diagram here)*
+
+Project Structure
+
+(Paste project structure or schema diagram here)
+
+[ project structure placeholder ]
