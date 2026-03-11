@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pipeline": "python_pipeline/venv/bin/python python_pipeline/pipeline.py"
   },
   "dependencies": {
     "csv-parse": "^6.1.0",

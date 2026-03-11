@@ -44,32 +44,8 @@ export default function Home() {
         throw new Error(result.error);
       }
 
-      // Format the data into a readable string for the LLM context file
-      const summary = result.data;
-      const contextString = `
-OVERTURE MAPS FOUNDATION DATA CONTEXT
-RELEASE: ${selectedRelease}
-GENERATED: ${new Date().toISOString()}
-
-================================================================================
-global_statistics:
-  - total_records: ${summary.totalRecords.toLocaleString()}
-  - themes_count: ${Object.keys(summary.themeCounts).length}
-  
-detailed_theme_breakdown:
-${Object.entries(summary.themeCounts).map(([theme, count]) => `  - ${theme}: ${Number(count).toLocaleString()}`).join('\n')}
-
-top_50_countries_by_record_count:
-${Object.entries(summary.countryCounts).map(([country, count]) => `  - ${country}: ${Number(count).toLocaleString()}`).join('\n')}
-
-================================================================================
-INSTRUCTIONS FOR LLM:
-You are analyzing Overture Maps data. The statistics above represent the ground truth for this release.
-When answering questions about "how many" or "which country has the most", refer *strictly* to these numbers.
-Do not hallucinate data that is not present in this context.
-`;
-
-      setGeneratedContext(contextString);
+      // The backend now executes the Python pipeline and returns the fully formatted text
+      setGeneratedContext(result.data);
       setStep('result');
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred');
