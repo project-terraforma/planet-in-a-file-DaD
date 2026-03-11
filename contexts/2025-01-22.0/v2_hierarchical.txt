@@ -7,11 +7,11 @@ Overture Maps Context [2025-01-22.0]
     │   └── address
     ├── BASE (386,993,823)
     │   └── land
+    │   └── land_use
     │   └── land_cover
     │   └── bathymetry
-    │   └── water
     │   └── infrastructure
-    │   └── land_use
+    │   └── water
     ├── BUILDINGS (2,618,753,985)
     │   └── building
     │   └── building_part

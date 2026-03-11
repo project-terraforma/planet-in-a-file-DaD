@@ -39,10 +39,10 @@ def parse_context(content):
                 data['themes'][theme_name]['types'] = types
 
     # Extract Countries from Section 4 specifically
-    section_4_match = re.search(r'SECTION 4 — GLOBAL STATISTICS(.*?)(?:SECTION 5|$)', content, re.DOTALL)
+    section_4_match = re.search(r'SECTION 4 .*? GLOBAL STATISTICS(.*?)(?:SECTION 5|$)', content, re.DOTALL | re.IGNORECASE)
     if section_4_match:
         section_4_content = section_4_match.group(1)
-        country_section_match = re.search(r'Top Countries Overall\n(.*?)(?:\n\n-----|$)', section_4_content, re.DOTALL)
+        country_section_match = re.search(r'Top Countries Overall\n(.*?)(?:\n\n-|$)', section_4_content, re.DOTALL)
         if country_section_match:
             country_matches = re.findall(r'-\s+([A-Z]{2}):\s*([\d,]+)', country_section_match.group(1))
             for country, count in country_matches:

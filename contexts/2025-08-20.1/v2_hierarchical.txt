@@ -1,6 +1,32 @@
-Overture Maps Context []
+Overture Maps Context [2025-08-20.1]
 └── Global Summary
-    ├── Total Records: 
-    └── Active Themes: 0
+    ├── Total Records: 4,210,854,040
+    └── Active Themes: 6
 └── Theme Hierarchy
+    ├── ADDRESSES (446,544,475)
+    │   └── address
+    ├── BASE (440,762,746)
+    │   └── land_cover
+    │   └── land_use
+    │   └── bathymetry
+    │   └── infrastructure
+    │   └── land
+    │   └── water
+    ├── BUILDINGS (2,542,553,660)
+    │   └── building
+    │   └── building_part
+    ├── DIVISIONS (5,549,168)
+    │   └── division
+    │   └── division_area
+    │   └── division_boundary
+    ├── PLACES (65,342,823)
+    │   └── place
+    ├── TRANSPORTATION (710,101,168)
+    │   └── segment
+    │   └── connector
 └── Top Countries
+    ├── US: 13,160,925
+    ├── BR: 5,127,453
+    ├── IN: 3,967,339
+    ├── MX: 2,848,443
+    ├── GB: 2,481,563

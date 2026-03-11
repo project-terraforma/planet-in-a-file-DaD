@@ -11,7 +11,12 @@ def flatten_hive_partitioned_month(month: str, base_path: Path, out_path: Path) 
 
     out_path.mkdir(parents=True, exist_ok=True)
 
-    csv_glob = str(input_path / "**" / "*.csv")
+    csv_glob = str(input_path / "row_counts" / "**" / "*.csv")
+    
+    # Check if row_counts exists
+    if not (input_path / "row_counts").exists():
+        print(f"Warning: row_counts not found in {input_path}, trying broad glob...")
+        csv_glob = str(input_path / "**" / "*.csv")
     
     # Check if any CSVs exist
     import glob

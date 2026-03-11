@@ -1,15 +1,26 @@
 OVERTURE MAPS FOUNDATION DATA CONTEXT
-RELEASE: 
+RELEASE: 2025-07-23.0
 GENERATED: 2026-03-11
 
 ================================================================================
 GLOBAL STATISTICS
-  - Total Records: 
-  - Themes Count: 0
+  - Total Records: 4,198,576,839
+  - Themes Count: 6
 
 DETAILED THEME BREAKDOWN
+  - Addresses: 446,544,475 records
+  - Base: 437,347,239 records
+  - Buildings: 2,537,908,432 records
+  - Divisions: 5,549,168 records
+  - Places: 64,639,979 records
+  - Transportation: 706,587,546 records
 
 TOP 50 COUNTRIES BY RECORD COUNT
+  - US: 12,724,622
+  - BR: 5,102,525
+  - IN: 3,926,330
+  - MX: 2,822,764
+  - GB: 2,449,052
 
 ================================================================================
 INSTRUCTIONS FOR LLM:

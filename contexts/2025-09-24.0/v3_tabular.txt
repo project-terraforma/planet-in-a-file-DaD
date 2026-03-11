@@ -1,15 +1,26 @@
-# Overture Maps Release  Summary
+# Overture Maps Release 2025-09-24.0 Summary
 
 ## Core Metrics
 | Metric | Value |
 | :--- | :--- |
-| Total Records |  |
-| Number of Themes | 0 |
+| Total Records | 4,219,677,254 |
+| Number of Themes | 6 |
 
 ## Theme Breakdown
 | Theme | Record Count |
 | :--- | :---: |
+| addresses | 446,544,475 |
+| base | 443,617,435 |
+| buildings | 2,538,274,736 |
+| divisions | 5,589,033 |
+| places | 71,624,529 |
+| transportation | 714,027,046 |
 
 ## Top Country Distribution
 | Rank | Country | Records |
 | :---: | :--- | :---: |
+| 1 | US | 15,067,519 |
+| 2 | BR | 5,269,234 |
+| 3 | IN | 4,070,405 |
+| 4 | GB | 3,200,624 |
+| 5 | DE | 3,125,886 |

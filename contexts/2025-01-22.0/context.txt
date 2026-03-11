@@ -46,12 +46,12 @@ TOTAL THEMES
 6
 
 THEMES INCLUDED
-- divisions
+- addresses
+- buildings
 - transportation
 - places
 - base
-- buildings
-- addresses
+- divisions
 
 COMMON ATTRIBUTES ACROSS THEMES
 datasets
@@ -144,50 +144,6 @@ Change Type Distribution
 
 ---------------------------------------------------------------------------------------------------------------
 
-### DIVISIONS
-
-Total Records: 5,447,026
-
-Types Included
-- division
-- division_area
-- division_boundary
-
-Top Datasets
-- OpenStreetMap: 5,420,745
-- geoBoundaries: 19,340
-- Esri Community Maps,OpenStreetMap: 6,939
-- OpenStreetMap,geoBoundaries: 2
-
-Property Coverage
-- subtype_count: 5,447,026 (100.00%)
-- names_count: 5,372,638 (98.63%)
-- country_count: 5,372,612 (98.63%)
-- region_count: 5,300,404 (97.31%)
-- class_count: 4,372,244 (80.27%)
-
-Top Class Values
-- hamlet: 1,670,811
-- village: 1,483,540
-- land: 1,089,821
-- town: 113,436
-- city: 14,636
-
-Top Subtype Values
-- locality: 3,845,472
-- neighborhood: 936,677
-- microhood: 276,444
-- macrohood: 190,780
-- county: 143,736
-
-Change Type Distribution
-- unchanged: 4,112,213
-- data_changed: 1,297,301
-- added: 37,512
-- removed: 9,944
-
----------------------------------------------------------------------------------------------------------------
-
 ### TRANSPORTATION
 
 Total Records: 686,267,959
@@ -268,6 +224,50 @@ Change Type Distribution
 
 ---------------------------------------------------------------------------------------------------------------
 
+### DIVISIONS
+
+Total Records: 5,447,026
+
+Types Included
+- division
+- division_area
+- division_boundary
+
+Top Datasets
+- OpenStreetMap: 5,420,745
+- geoBoundaries: 19,340
+- Esri Community Maps,OpenStreetMap: 6,939
+- OpenStreetMap,geoBoundaries: 2
+
+Property Coverage
+- subtype_count: 5,447,026 (100.00%)
+- names_count: 5,372,638 (98.63%)
+- country_count: 5,372,612 (98.63%)
+- region_count: 5,300,404 (97.31%)
+- class_count: 4,372,244 (80.27%)
+
+Top Class Values
+- hamlet: 1,670,811
+- village: 1,483,540
+- land: 1,089,821
+- town: 113,436
+- city: 14,636
+
+Top Subtype Values
+- locality: 3,845,472
+- neighborhood: 936,677
+- microhood: 276,444
+- macrohood: 190,780
+- county: 143,736
+
+Change Type Distribution
+- unchanged: 4,112,213
+- data_changed: 1,297,301
+- added: 37,512
+- removed: 9,944
+
+---------------------------------------------------------------------------------------------------------------
+
 ### PLACES
 
 Total Records: 55,527,168
@@ -312,11 +312,11 @@ Total Records: 386,993,823
 
 Types Included
 - land
+- land_use
 - land_cover
 - bathymetry
-- water
 - infrastructure
-- land_use
+- water
 
 Top Datasets
 - OpenStreetMap: 263,631,649
