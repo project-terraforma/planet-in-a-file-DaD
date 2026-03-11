@@ -14,7 +14,7 @@ def main():
     
     # Define paths relative to the Next.js project root
     script_dir = Path(__file__).parent
-    project_root = script_dir.parents[1]
+    project_root = script_dir.parent
     
     # Input data from the friend's Next.js project structure
     # Based on verify_data.js, the metrics are at ../../metrics relative to scripts/
