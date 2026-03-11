@@ -1,29 +1,387 @@
-Overture Maps Context [2025-03-19.1]
-└── Global Summary
+Overture Maps Intelligence Tree [2025-03-19.1]
+└── Metadata
+    ├── Sections: 1 (Overview), 2 (Structure), 5 (Examples)
+    └── Instruction: Grounded analysis required
+└── Global Statistics
     ├── Total Records: 4,237,006,019
-    └── Themes: 6
-└── Theme Hierarchy
-    ├── ADDRESSES (428,821,683)
-    │   ├── Types: address
-    │   ├── Top Source: br_ibge (89,899,299)
-    ├── BASE (410,158,143)
-    │   ├── Types: bathymetry, land, water, land_use, land_cover, infrastructure
-    │   ├── Top Source: OpenStreetMap (286,795,969)
-    ├── BUILDINGS (2,632,550,083)
-    │   ├── Types: building, building_part
-    │   ├── Top Source: Google Open Buildings (1,001,112,490)
-    ├── DIVISIONS (5,467,062)
-    │   ├── Types: division, division_area, division_boundary
-    │   ├── Top Source: OpenStreetMap (5,431,658)
-    ├── PLACES (66,598,099)
-    │   ├── Types: place
-    │   ├── Top Source: meta (58,177,213)
-    ├── TRANSPORTATION (693,410,949)
-    │   ├── Types: segment, connector
-    │   ├── Top Source: OpenStreetMap (693,214,214)
-└── Top Countries
-    ├── US: 13,156,177
-    ├── BR: 5,223,704
-    ├── IN: 4,120,411
-    ├── MX: 2,922,193
-    ├── GB: 2,580,995
+    ├── Themes: 6
+└── ADDRESSES (428,821,683)
+    ├── Types: address
+    ├── Sources: 5 identified
+    └── Coverage: 5 metrics available
+└── BASE (410,158,143)
+    ├── Types: bathymetry, land, water
+    ├── Sources: 3 identified
+    └── Coverage: 5 metrics available
+└── BUILDINGS (2,632,550,083)
+    ├── Types: building, building_part
+    ├── Sources: 5 identified
+    └── Coverage: 5 metrics available
+└── DIVISIONS (5,467,062)
+    ├── Types: division, division_area, division_boundary
+    ├── Sources: 5 identified
+    └── Coverage: 5 metrics available
+└── PLACES (66,598,099)
+    ├── Types: place
+    ├── Sources: 3 identified
+    └── Coverage: 5 metrics available
+└── TRANSPORTATION (693,410,949)
+    ├── Types: segment, connector
+    ├── Sources: 2 identified
+    └── Coverage: 5 metrics available
+
+--- FULL CONTEXT APPENDED BELOW ---
+SECTION 1 — CONTEXT OVERVIEW
+---------------------------------------------------------------------------------------------------------------
+
+WHAT IS OVERTURE MAPS? 
+Overture Maps is an open data initiative meant to make geospatial data accessible world-wide. Users can browse
+buildings, roads, places, and more. Data is downloadable as GeoJSON Files and can be queried using DuckDB.
+
+WHAT IS THE DATASET BEING USED?
+
+Typically all-encompassing Overture Maps Data is large and uses hive-partitioned parquet files. The dataset 
+used for this context file is the *Metrics* dataset. This dataset is also large and cannot be added within
+a prompt window, but serves as a summary/aggregation of the map data. All statistics and data information comes
+from the Metrics dataset.
+
+DATA SUMMARY:
+You'll be given a particular month's context file and be able to view a high-level yet informational summary of
+the current data in the Overture Maps Dataset. It provides aggregated metrics that describe dataset coverage, 
+attribute availability, and theme-level statistics. In the metrics dataset, a row usually represents an aggregated count over a group
+of features rather than an individual map feature.
+
+YOUR ROLE AS THE LLM:
+You are a bookeeper and analyst of the Overture Maps Metrics Dataset. Given a user's questions, you will retrieve answers
+that you know, with expertise. 
+
+RULES:
+1. Only use information contained in this context file.
+2. If a statistic is not present, say : "information is currently unavailable".
+3. When answering, reference specific numbers from the dataset.
+4. Do not infer values that are not explicitly provided.
+5. Do not add on additional knowledge from other sources, or assumptions.
+6. Treat example user queries as demonstrations of format only, not as reusable answers.
+
+
+---------------------------------------------------------------------------------------------------------------
+SECTION 2 — DATASET STRUCTURE
+---------------------------------------------------------------------------------------------------------------
+
+TOTAL THEMES
+6
+
+THEMES INCLUDED
+- addresses
+- transportation
+- divisions
+- buildings
+- places
+- base
+
+COMMON ATTRIBUTES ACROSS THEMES
+datasets
+change_type
+id_count
+geometry_count
+bbox_count
+version_count
+sources_count
+total_count
+theme
+type
+
+COMMON ATTRIBUTE DEFINITIONS
+id_count: Number of unique feature IDs in the grouping
+geometry_count: Number of geometries present
+bbox_count: Number of bounding boxes available
+sources_count: Number of data sources contributing to the records
+total_count: Total aggregated records for the grouping
+address_level_1: Administrative division level 1 (e.g. State, Province)
+address_level_2: Administrative division level 2 (e.g. County, City)
+
+IMPORTANT DATA FILTERING RULE
+Unless explicitly stated otherwise, all statistics exclude rows where change_type = removed.
+The only section where removed rows are included is: Change Type Distribution.
+
+AVAILABLE STATISTICS
+
+Theme-level Statistics:
+- total records
+- property coverage
+- top datasets
+- top class values
+- top subtype values
+- change type distribution
+
+Global Statistics:
+- largest themes
+- total records across all themes
+- top countries
+
+KEY NOTES
+- Metrics represent counts aggregated from the metrics dataset
+
+---------------------------------------------------------------------------------------------------------------
+
+### ADDRESSES
+ADDRESSES
+
+Total Records: 428,821,683
+
+Types Included
+- address
+
+Top Datasets
+- br_ibge: 89,899,299
+- NAD: 78,609,927
+- OpenAddresses/AddressForAll/INEGI: 30,278,896
+- OpenAddresses/adresse.data.gouv.fr: 26,041,499
+- OpenAddresses/Japanese Ministry of Land, Infrastructure and Transport: 19,576,027
+
+Property Coverage
+- country_count: 428,821,683 (100.00%)
+- address_levels_count: 428,821,683 (100.00%)
+- number_count: 425,459,643 (99.22%)
+- street_count: 421,033,891 (98.18%)
+- postcode_count: 324,227,809 (75.61%)
+
+Top Address Level 1 Values
+- SP: 17,434,203
+- CA: 14,391,275
+- MG: 9,962,739
+- TX: 9,799,798
+- FL: 9,631,925
+
+Top Address Level 2 Values
+- São Paulo: 3,503,297
+- UNINCORPORATED: 1,980,650
+- Rio de Janeiro: 1,798,005
+- Bogotá Distrito Capital: 1,075,087
+- New York: 967,700
+
+Change Type Distribution
+- added: 428,821,683
+- removed: 407,936,328
+
+### BASE
+BASE
+
+Total Records: 410,158,143
+
+Types Included
+- bathymetry
+- land
+- water
+- land_use
+- land_cover
+- infrastructure
+
+Top Datasets
+- OpenStreetMap: 286,795,969
+- ESA WorldCover: 123,302,114
+- ETOPO/GLOBathy: 60,060
+
+Property Coverage
+- subtype_count: 410,098,083 (99.99%)
+- class_count: 286,795,969 (69.92%)
+- source_tags_count: 286,795,969 (69.92%)
+- cartography_count: 123,362,174 (30.08%)
+- names_count: 22,038,269 (5.37%)
+
+Top Class Values
+- tree: 27,763,625
+- stream: 24,683,290
+- power_tower: 16,893,134
+- power_pole: 15,728,115
+- water: 13,884,641
+
+Top Subtype Values
+- power: 40,436,128
+- shrub: 40,367,722
+- forest: 36,445,076
+- tree: 29,469,765
+- barrier: 27,721,954
+
+Change Type Distribution
+- unchanged: 407,071,263
+- added: 1,892,888
+- data_changed: 1,193,992
+- removed: 173,370
+
+### BUILDINGS
+BUILDINGS
+
+Total Records: 2,632,550,083
+
+Types Included
+- building
+- building_part
+
+Top Datasets
+- Google Open Buildings: 1,001,112,490
+- Microsoft ML Buildings: 738,009,442
+- OpenStreetMap: 550,678,683
+- doi:10.5281/zenodo.8174931: 228,245,079
+- Microsoft ML Buildings,OpenStreetMap: 76,186,492
+
+Property Coverage
+- is_underground_count: 2,632,550,083 (100.00%)
+- has_parts_count: 2,629,324,413 (99.88%)
+- height_count: 191,741,056 (7.28%)
+- subtype_count: 130,013,719 (4.94%)
+- class_count: 128,214,859 (4.87%)
+
+Top Class Values
+- house: 59,322,007
+- residential: 15,399,744
+- detached: 8,432,493
+- garage: 7,308,365
+- apartments: 6,930,069
+
+Top Subtype Values
+- residential: 105,440,432
+- outbuilding: 7,400,705
+- agricultural: 4,227,973
+- commercial: 3,933,924
+- industrial: 3,484,870
+
+Change Type Distribution
+- unchanged: 2,601,460,728
+- added: 20,928,327
+- data_changed: 10,161,028
+- removed: 9,191,987
+
+### DIVISIONS
+DIVISIONS
+
+Total Records: 5,467,062
+
+Types Included
+- division
+- division_area
+- division_boundary
+
+Top Datasets
+- OpenStreetMap: 5,431,658
+- geoBoundaries: 28,340
+- Esri Community Maps,OpenStreetMap: 5,974
+- Maps Entity Variant Names,OpenStreetMap: 861
+- Esri Community Maps,Maps Entity Variant Names,OpenStreetMap: 229
+
+Property Coverage
+- subtype_count: 5,467,062 (100.00%)
+- names_count: 5,380,349 (98.41%)
+- country_count: 5,380,343 (98.41%)
+- region_count: 5,316,162 (97.24%)
+- hierarchies_count: 4,361,870 (79.78%)
+
+Top Class Values
+- hamlet: 1,611,207
+- village: 1,446,892
+- land: 1,101,379
+- town: 105,358
+- city: 11,878
+
+Top Subtype Values
+- locality: 3,847,305
+- neighborhood: 949,140
+- microhood: 279,257
+- macrohood: 181,349
+- county: 154,955
+
+Change Type Distribution
+- unchanged: 4,644,604
+- data_changed: 668,692
+- added: 153,766
+- removed: 143,706
+
+### PLACES
+PLACES
+
+Total Records: 66,598,099
+
+Types Included
+- place
+
+Top Countries by Record Count
+- US: 13,156,177
+- BR: 5,223,704
+- IN: 4,120,411
+- MX: 2,922,193
+- GB: 2,580,995
+
+Top Datasets
+- meta: 58,177,213
+- Microsoft: 5,542,373
+- Microsoft,meta: 2,878,513
+
+Property Coverage
+- names_count: 66,598,099 (100.00%)
+- categories_count: 66,598,099 (100.00%)
+- confidence_count: 66,598,099 (100.00%)
+- addresses_count: 66,598,099 (100.00%)
+- socials_count: 60,869,684 (91.40%)
+
+Top Category Values
+- restaurant: 1,760,466
+- professional_services: 1,633,442
+- beauty_salon: 1,627,320
+- shopping: 1,466,157
+- hotel: 1,421,635
+
+Change Type Distribution
+- unchanged: 32,815,899
+- added: 17,185,352
+- data_changed: 16,596,848
+- removed: 12,857,805
+
+### TRANSPORTATION
+TRANSPORTATION
+
+Total Records: 693,410,949
+
+Types Included
+- segment
+- connector
+
+Top Datasets
+- OpenStreetMap: 693,214,214
+- TomTom: 196,735
+
+Property Coverage
+- subtype_count: 320,175,664 (46.17%)
+- connectors_count: 320,175,664 (46.17%)
+- class_count: 318,544,915 (45.94%)
+- names_count: 90,852,100 (13.10%)
+- road_surface_count: 83,519,604 (12.04%)
+
+Top Class Values
+- residential: 124,704,423
+- service: 56,017,893
+- unclassified: 29,234,595
+- track: 24,646,895
+- footway: 20,459,529
+
+Top Subtype Values
+- road: 318,544,915
+- rail: 1,602,948
+- water: 27,801
+
+Change Type Distribution
+- unchanged: 684,951,137
+- data_changed: 4,986,750
+- added: 3,473,062
+- removed: 946,666
+
+SECTION 5 — EXAMPLE USER QUERIES
+---------------------------------------------------------------------------------------------------------------
+
+User: Which country has the most address records?
+Answer: The United States has the highest number of address records with [VALUE] entries.
+
+User: What are the top categories in the places theme?
+Answer: Restaurant, Cafe, and Hotel are among the most common categories.
+
+User: What percentage of buildings contain height data?
+Answer: [VALUE]% of buildings include height information
