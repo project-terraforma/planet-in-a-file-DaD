@@ -21,14 +21,13 @@ def parse_context(content):
         data['total_records'] = match.group(1).strip()
     
     # Split by Theme Blocks
-    # Each theme starts with ### THEME_NAME
     theme_sections = re.split(r'### ', content)
     for section in theme_sections[1:]:
         lines = section.strip().split('\n')
         if not lines: continue
         
         theme_name = lines[0].strip().lower()
-        if theme_name == "summary": continue # Skip global summary if it matches pattern
+        if theme_name == "summary": continue
         
         theme_data = {
             'count': '0',
@@ -58,18 +57,22 @@ def parse_context(content):
         # Property Coverage
         coverage_match = re.search(r'Property Coverage\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
         if coverage_match:
-            # Matches "- name: count (pct%)"
             theme_data['coverage'] = re.findall(r'- (.*?): ([\d,]+) \((.*?)\)', coverage_match.group(1))
             
-        # Top Class Values
-        class_match = re.search(r'Top Class Values\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
-        if class_match:
-            theme_data['classes'] = re.findall(r'- (.*?): ([\d,]+)', class_match.group(1))
-            
-        # Top Subtype Values
-        subtype_match = re.search(r'Top Subtype Values\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
-        if subtype_match:
-            theme_data['subtypes'] = re.findall(r'- (.*?): ([\d,]+)', subtype_match.group(1))
+        # Flexible matching for Classes/Categories/Types
+        class_patterns = [r'Top Class Values', r'Top Category Values']
+        for p in class_patterns:
+            m = re.search(rf'{p}\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
+            if m:
+                theme_data['classes'].extend(re.findall(r'- (.*?): ([\d,]+)', m.group(1)))
+                
+        # Flexible matching for Subtypes/Levels
+        subtype_patterns = [r'Top Subtype Values', r'Top Address Level 1 Values', r'Top Address Level 2 Values']
+        for p in subtype_patterns:
+            m = re.search(rf'{p}\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
+            if m:
+                # For levels, we might want to distinguish them, but for a general "subtypes" column in a table, we can merge
+                theme_data['subtypes'].extend(re.findall(r'- (.*?): ([\d,]+)', m.group(1)))
             
         # Change Type Distribution
         dist_match = re.search(r'Change Type Distribution\n(.*?)(?:\n\n|\Z)', section, re.DOTALL)
@@ -78,7 +81,7 @@ def parse_context(content):
             
         data['themes'][theme_name] = theme_data
 
-    # Extract Countries from Section 4 specifically
+    # Extract Countries
     section_4_match = re.search(r'SECTION 4 .*? GLOBAL STATISTICS(.*?)(?:SECTION 5|$)', content, re.DOTALL | re.IGNORECASE)
     if section_4_match:
         section_4_content = section_4_match.group(1)
@@ -92,107 +95,77 @@ def parse_context(content):
 
 def generate_v1_refined(data):
     lines = [
-        f"OVERTURE MAPS FOUNDATION DATA CONTEXT",
+        f"OVERTURE MAPS FOUNDATION DATA SUMMARY",
         f"RELEASE: {data['release']}",
-        f"GENERATED: 2026-03-11",
-        "",
-        "================================================================================",
+        f"================================================================================",
         "GLOBAL STATISTICS",
         f"  - Total Records: {data['total_records']}",
-        f"  - Themes Count: {len(data['themes'])}",
+        f"  - Active Themes: {len(data['themes'])}",
         "",
-        "DETAILED THEME BREAKDOWN"
+        "THEME BREAKDOWN"
     ]
     for theme, info in sorted(data['themes'].items()):
         lines.append(f"  - {theme.upper()}: {info['count']} records")
         if info['datasets']:
-            lines.append(f"    * Top Sources: " + ", ".join([f"{d[0]} ({d[1]})" for d in info['datasets'][:3]]))
+            lines.append(f"    * Top Sources: " + ", ".join([f"{d[0]} ({d[1]})" for d in info['datasets'][:2]]))
         if info['coverage']:
-            lines.append(f"    * Highlights: " + ", ".join([f"{c[0]} ({c[2]})" for c in info['coverage'][:3]]))
+            lines.append(f"    * Attribute Coverage: " + ", ".join([f"{c[0]} ({c[2]})" for c in info['coverage'][:2]]))
     
     lines.append("")
-    lines.append("TOP COUNTRIES OVERALL")
-    for c in data['countries']:
-        lines.append(f"  - {c['name']}: {c['count']}")
-    
-    lines.append("")
-    lines.append("================================================================================")
-    lines.append("STRICT ANALYST MODE: Use only the figures above for verification.")
+    lines.append("TOP 20 COUNTRIES")
+    country_list = [f"{c['name']} ({c['count']})" for c in data['countries'][:20]]
+    for i in range(0, len(country_list), 4):
+        lines.append("  " + ", ".join(country_list[i:i+4]))
     
     return "\n".join(lines)
 
 def generate_v2_hierarchical(data):
     lines = [
-        f"Overture Maps Context [{data['release']}]",
-        "└── Global Summary",
-        f"    ├── Total Records: {data['total_records']}",
-        f"    └── Themes: {len(data['themes'])}",
-        "└── Theme Hierarchy"
+        f"Overture Maps Tree [{data['release']}]",
+        "└── Global",
+        f"    ├── Records: {data['total_records']}",
+        "└── Themes"
     ]
-    
     for theme, info in sorted(data['themes'].items()):
         lines.append(f"    ├── {theme.upper()} ({info['count']})")
         if info['types']:
-            lines.append(f"    │   ├── Types: " + ", ".join(info['types']))
-        if info['datasets']:
-            lines.append(f"    │   ├── Top Source: {info['datasets'][0][0]} ({info['datasets'][0][1]})")
-            
-    lines.append("└── Top Countries")
-    for c in data['countries'][:10]:
-        lines.append(f"    ├── {c['name']}: {c['count']}")
-        
+            lines.append(f"    │   ├── Types: {', '.join(info['types'][:3])}")
     return "\n".join(lines)
 
 def generate_v3_tabular(data):
     lines = [
-        f"# Overture Maps Release {data['release']} Summary",
+        f"# Overture Maps Release {data['release']} Tabular Summary",
         "",
-        "## Core Metrics",
-        f"**Total Records:** {data['total_records']} | **Themes:** {len(data['themes'])}",
-        "",
-        "## Theme Details",
-        "| Theme | Total Count | Top Classes | Top Subtypes |",
+        "## Themes & Key Values",
+        "| Theme | Total Count | Class/Categories | Subtypes/Levels |",
         "| :--- | :--- | :--- | :--- |"
     ]
     for theme, info in sorted(data['themes'].items()):
-        classes = ", ".join([c[0] for c in info['classes'][:2]])
-        subtypes = ", ".join([s[0] for s in info['subtypes'][:2]])
+        classes = ", ".join([c[0] for c in info['classes'][:3]])
+        subtypes = ", ".join([s[0] for s in info['subtypes'][:3]])
         lines.append(f"| {theme} | {info['count']} | {classes} | {subtypes} |")
         
     lines.append("")
-    lines.append("## Property Coverage highlights")
-    lines.append("| Theme | Metric | Coverage |")
+    lines.append("## Property Coverage Metrics")
+    lines.append("| Theme | Measurement | Availability % |")
     lines.append("| :--- | :--- | :--- |")
     for theme, info in sorted(data['themes'].items()):
-        for c in info['coverage'][:2]:
+        for c in info['coverage'][:3]:
             lines.append(f"| {theme} | {c[0]} | {c[2]} |")
-            
-    lines.append("")
-    lines.append("## Top Countries")
-    lines.append("| Rank | Country | Records |")
-    lines.append("| :---: | :--- | :---: |")
-    for i, c in enumerate(data['countries'][:10], 1):
-        lines.append(f"| {i} | {c['name']} | {c['count']} |")
-        
     return "\n".join(lines)
 
 def generate_v4_compressed(data):
     theme_str = "; ".join([f"{t}:{info['count']}" for t, info in data['themes'].items()])
-    country_str = ",".join([f"{c['name']}:{c['count']}" for c in data['countries'][:10]])
-    return f"REF:{data['release']}|TOT:{data['total_records']}|THEMES[{theme_str}]|TOP10_GEO[{country_str}]"
+    return f"REF:{data['release']}|TOT:{data['total_records']}|THEMES[{theme_str}]"
 
 def main():
     project_root = Path(__file__).resolve().parent.parent
     contexts_dir = project_root / "contexts"
-    
     for month_dir in contexts_dir.iterdir():
         if month_dir.is_dir():
             context_file = month_dir / "context.txt"
             if context_file.exists():
-                print(f"Processing formats for {month_dir.name}...")
-                content = context_file.read_text()
-                data = parse_context(content)
-                
+                data = parse_context(context_file.read_text())
                 (month_dir / "v1_refined.txt").write_text(generate_v1_refined(data))
                 (month_dir / "v2_hierarchical.txt").write_text(generate_v2_hierarchical(data))
                 (month_dir / "v3_tabular.txt").write_text(generate_v3_tabular(data))

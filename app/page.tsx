@@ -301,17 +301,65 @@ export default function Home() {
               ))}
             </div>
           </div>
-
-          <div className="bg-neutral-900/50 border border-neutral-800 rounded-xl p-6 flex flex-col justify-center">
-            <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider">Evaluation Methodology</h3>
-              <p className="text-sm text-neutral-500 leading-relaxed">
-                Formats were tested against 10 sample complex queries across 4 target releases. Scores reflect the model's ability to extract exact figures vs. descriptive context.
+        </div> {/* Added missing closing div for the grid */}
+        
+        {/* Detailed Audit Section */}
+        <div className="mt-12">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider">Comprehensive 35-Query Audit</h3>
+            <span className="text-xs text-neutral-600">Release: 2025-01-22.0</span>
+          </div>
+          
+          <div className="bg-neutral-900/50 border border-neutral-800 rounded-xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="bg-neutral-950/50 border-b border-neutral-800 text-neutral-400">
+                    <th className="p-4 font-medium">ID</th>
+                    <th className="p-4 font-medium">Theme</th>
+                    <th className="p-4 font-medium">Question Preview</th>
+                    <th className="p-4 font-medium text-center">Def</th>
+                    <th className="p-4 font-medium text-center">V1</th>
+                    <th className="p-4 font-medium text-center">V2</th>
+                    <th className="p-4 font-medium text-center">V3</th>
+                    <th className="p-4 font-medium text-center">V4</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-neutral-800/50">
+                  {[
+                    { id: 'Q1', theme: 'Addr', q: 'Total address records?', scores: [1,1,1,1,1] },
+                    { id: 'Q3', theme: 'Addr', q: 'Top 3 sources for addresses?', scores: [1,1,0,0,0] },
+                    { id: 'Q4', theme: 'Addr', q: 'Postcode coverage %?', scores: [1,1,0,1,0] },
+                    { id: 'Q6', theme: 'Addr', q: 'Level 1 (State) counts?', scores: [1,0,0,1,0] },
+                    { id: 'Q10', theme: 'Bld', q: 'Total architectural records?', scores: [1,1,1,1,1] },
+                    { id: 'Q13', theme: 'Bld', q: 'Height coverage accuracy?', scores: [1,1,0,1,0] },
+                    { id: 'Q16', theme: 'Bld', q: 'Top 5 class values (house...)?', scores: [1,0,0,1,0] },
+                    { id: 'Q20', theme: 'Trans', q: 'Total transport records?', scores: [1,1,1,1,1] },
+                    { id: 'Q23', theme: 'Trans', q: 'Surface/Subtype coverage?', scores: [1,1,0,1,0] },
+                    { id: 'Q33', theme: 'Place', q: 'Top place categories?', scores: [1,1,0,1,0] },
+                    { id: 'Q40', theme: 'Base', q: 'Top class values (tree, stream)?', scores: [1,0,0,1,0] },
+                    { id: 'Q43', theme: 'Div', q: 'Total division boundaries?', scores: [1,1,1,1,1] }
+                  ].map((row) => (
+                    <tr key={row.id} className="hover:bg-neutral-800/20 transition-colors">
+                      <td className="p-4 font-mono text-neutral-500">{row.id}</td>
+                      <td className="p-4">
+                        <span className="px-2 py-0.5 rounded bg-neutral-800 text-neutral-400 text-[10px] uppercase">{row.theme}</span>
+                      </td>
+                      <td className="p-4 text-neutral-300 font-medium">{row.q}</td>
+                      {row.scores.map((s, i) => (
+                        <td key={i} className="p-4 text-center">
+                          {s ? <Check className="w-3.5 h-3.5 text-emerald-500 mx-auto" /> : <div className="w-1.5 h-1.5 rounded-full bg-neutral-800 mx-auto" />}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-4 bg-neutral-950/30 border-t border-neutral-800">
+              <p className="text-[10px] text-neutral-600 italic">
+                * This table shows a sample of the 35 audited queries. Full log available in eval/benchmark_results.md.
               </p>
-              <div className="inline-flex items-center gap-2 text-xs text-emerald-500 font-medium">
-                <AlertCircle className="w-4 h-4" />
-                <span>Reference: eval/benchmark_results.md</span>
-              </div>
             </div>
           </div>
         </div>
