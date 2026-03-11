@@ -1,0 +1,42 @@
+Overture Maps Context [2025-07-23.0]
+└── Global Summary
+    ├── Total Records: 5,288,800,739
+    └── Active Themes: 6
+└── Theme Hierarchy
+    ├── ADDRESSES (446,006,520)
+    │   └── address: 446,006,520
+    ├── BASE (751,332,401)
+    │   ├── bathymetry: 59,963
+    │   ├── infrastructure: 271,172,226
+    │   ├── land: 134,950,626
+    │   ├── land_cover: 123,302,114
+    │   ├── land_use: 101,553,208
+    │   └── water: 120,294,264
+    ├── BUILDINGS (2,537,908,432)
+    │   ├── building: 2,534,560,183
+    │   └── building_part: 3,348,249
+    ├── DIVISIONS (11,098,336)
+    │   ├── division: 8,852,088
+    │   ├── division_area: 2,071,498
+    │   └── division_boundary: 174,750
+    ├── PLACES (129,279,958)
+    │   └── place: 129,279,958
+    ├── TRANSPORTATION (1,413,175,092)
+    │   ├── connector: 761,842,102
+    │   └── segment: 651,332,990
+└── Top Countries
+    ├── US: 138,269,099
+    ├── BR: 100,409,545
+    ├── MX: 34,226,715
+    ├── IT: 30,574,666
+    ├── FR: 30,434,313
+    ├── JP: 24,541,201
+    ├── DE: 20,835,871
+    ├── CA: 19,683,222
+    ├── AU: 17,997,474
+    ├── ES: 16,505,709
+    ├── NL: 11,288,242
+    ├── TW: 11,239,071
+    ├── PL: 9,881,565
+    ├── CO: 8,985,411
+    ├── IN: 8,654,554

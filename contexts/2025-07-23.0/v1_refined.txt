@@ -1,0 +1,75 @@
+OVERTURE MAPS FOUNDATION DATA CONTEXT
+RELEASE: 2025-07-23.0
+GENERATED: 2026-03-10T10:28:37.437327
+
+================================================================================
+GLOBAL STATISTICS
+  - Total Records: 5,288,800,739
+  - Themes Count: 6
+
+DETAILED THEME BREAKDOWN
+  - Addresses: 446,006,520 records
+  - Base: 751,332,401 records
+  - Buildings: 2,537,908,432 records
+  - Divisions: 11,098,336 records
+  - Places: 129,279,958 records
+  - Transportation: 1,413,175,092 records
+
+TOP 50 COUNTRIES BY RECORD COUNT
+  - US: 138,269,099
+  - BR: 100,409,545
+  - MX: 34,226,715
+  - IT: 30,574,666
+  - FR: 30,434,313
+  - JP: 24,541,201
+  - DE: 20,835,871
+  - CA: 19,683,222
+  - AU: 17,997,474
+  - ES: 16,505,709
+  - NL: 11,288,242
+  - TW: 11,239,071
+  - PL: 9,881,565
+  - CO: 8,985,411
+  - IN: 8,654,554
+  - BE: 7,775,086
+  - PT: 6,475,478
+  - GB: 5,066,892
+  - CL: 4,951,432
+  - DK: 4,408,290
+  - FI: 4,190,984
+  - ID: 4,113,890
+  - CH: 4,072,375
+  - TH: 3,781,116
+  - CZ: 3,683,763
+  - TR: 3,430,534
+  - AT: 3,175,655
+  - NO: 3,075,145
+  - VN: 2,899,852
+  - NZ: 2,743,996
+  - EE: 2,328,631
+  - PH: 2,199,660
+  - HR: 1,995,475
+  - SK: 1,891,378
+  - AR: 1,710,732
+  - MY: 1,615,522
+  - RU: 1,596,390
+  - LT: 1,219,893
+  - CN: 1,210,444
+  - UY: 1,185,553
+  - ZA: 1,146,914
+  - KR: 991,608
+  - SE: 974,512
+  - PE: 920,720
+  - GR: 847,186
+  - UA: 696,648
+  - SI: 695,340
+  - RO: 682,284
+  - LV: 676,270
+  - EG: 599,062
+
+================================================================================
+INSTRUCTIONS FOR LLM:
+You are an expert data analyst specializing in Overture Maps. The statistics above represent the GROUND TRUTH.
+1. Referral: Use these numbers for any 'how many' or 'top' questions.
+2. Strictness: If a theme or country is not listed, state it is unavailable in this summary.
+3. Accuracy: Do not hallucinate growth rates or future projections unless explicitly derived from this data.
