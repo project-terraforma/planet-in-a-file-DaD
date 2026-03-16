@@ -36,9 +36,9 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           release: selectedRelease,
-          format: selectedFormat 
+          format: selectedFormat
         }),
       });
 
@@ -51,8 +51,12 @@ export default function Home() {
       // The backend now executes the Python pipeline and returns the fully formatted text
       setGeneratedContext(result.data);
       setStep('result');
-    } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'An unexpected error occurred');
+      } else {
+        setError('An unexpected error occurred');
+      }
       setStep('select');
     } finally {
       setLoading(false);
@@ -86,14 +90,14 @@ export default function Home() {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Terminal className="w-6 h-6 text-emerald-500" />
-            <span className="text-emerald-500 text-sm font-mono tracking-widest uppercase">Overture Maps Intelligence</span>
+            <span className="text-emerald-500 text-sm font-mono tracking-widest uppercase">Project Terraforma</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-500">
-            Dashboards are Dead.
+            Planet-Fetch
           </h1>
           <p className="max-w-2xl mx-auto text-neutral-400 text-lg md:text-xl">
             Stop staring at static charts. Start a conversation with your data. <br />
-            Generate LLM-ready context files from raw Overture Maps metrics instantly.
+            Generate LLM-ready context files from raw Overture Maps metrics.
           </p>
         </motion.div>
       </section>
@@ -156,11 +160,10 @@ export default function Home() {
                           key={f.id}
                           type="button"
                           onClick={() => setSelectedFormat(f.id)}
-                          className={`py-3 px-2 rounded-lg border text-sm font-medium transition-all ${
-                            selectedFormat === f.id
-                              ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
-                              : 'bg-neutral-950 border-neutral-800 text-neutral-500 hover:border-neutral-700'
-                          }`}
+                          className={`py-3 px-2 rounded-lg border text-sm font-medium transition-all ${selectedFormat === f.id
+                            ? 'bg-emerald-500/20 border-emerald-500 text-emerald-400'
+                            : 'bg-neutral-950 border-neutral-800 text-neutral-500 hover:border-neutral-700'
+                            }`}
                         >
                           {f.label}
                         </button>
@@ -246,14 +249,28 @@ export default function Home() {
                   </div>
 
                   <div className="bg-neutral-900/50 border border-neutral-800 rounded-lg p-4 flex items-start gap-3">
-                    <div className="p-2 bg-emerald-500/10 rounded-full">
+                    <div className="p-2 bg-emerald-500/10 rounded-full h-fit">
                       <Database className="w-4 h-4 text-emerald-500" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h4 className="text-sm font-medium text-white">Ready for LLM Ingestion</h4>
-                      <p className="text-sm text-neutral-500 mt-1">
+                      <p className="text-sm text-neutral-500 mt-1 mb-3">
                         Copy the text above and paste it into ChatGPT, Claude, or any LLM to ask questions about this dataset.
                       </p>
+                      <div className="flex flex-wrap gap-2">
+                        <a href="https://chatgpt.com" target="_blank" rel="noreferrer" className="text-xs px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-md border border-neutral-700 transition-colors flex items-center gap-1.5">
+                          <ArrowRight className="w-3 h-3 text-emerald-500" /> ChatGPT
+                        </a>
+                        <a href="https://claude.ai" target="_blank" rel="noreferrer" className="text-xs px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-md border border-neutral-700 transition-colors flex items-center gap-1.5">
+                          <ArrowRight className="w-3 h-3 text-emerald-500" /> Claude
+                        </a>
+                        <a href="https://gemini.google.com" target="_blank" rel="noreferrer" className="text-xs px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-md border border-neutral-700 transition-colors flex items-center gap-1.5">
+                          <ArrowRight className="w-3 h-3 text-emerald-500" /> Gemini
+                        </a>
+                        <a href="https://copilot.microsoft.com" target="_blank" rel="noreferrer" className="text-xs px-3 py-1.5 bg-neutral-800 hover:bg-neutral-700 text-white rounded-md border border-neutral-700 transition-colors flex items-center gap-1.5">
+                          <ArrowRight className="w-3 h-3 text-emerald-500" /> Copilot
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -263,110 +280,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Accuracy Benchmarks Section */}
-      <section className="max-w-4xl mx-auto mt-20 px-6 pb-20">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-emerald-500/10 rounded-lg">
-            <Check className="w-5 h-5 text-emerald-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Accuracy Benchmarks</h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-neutral-900/50 border border-neutral-800 rounded-xl p-6">
-            <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">Factuality Score by Format</h3>
-            <div className="space-y-4">
-              {[
-                { label: 'Standard (Default)', score: 100, color: 'bg-emerald-500' },
-                { label: 'Concise (V1)', score: 85, color: 'bg-emerald-400' },
-                { label: 'Table (V3)', score: 75, color: 'bg-emerald-600' },
-                { label: 'Tree (V2)', score: 30, color: 'bg-yellow-500' },
-                { label: 'Min (V4)', score: 15, color: 'bg-red-500' },
-              ].map((item) => (
-                <div key={item.label} className="space-y-1.5">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-neutral-300">{item.label}</span>
-                    <span className="text-neutral-500 font-mono">{item.score}% Accuracy</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-neutral-800 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${item.score}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.5 }}
-                      className={`h-full ${item.color}`} 
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> {/* Added missing closing div for the grid */}
-        
-        {/* Detailed Audit Section */}
-        <div className="mt-12">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider">Comprehensive 35-Query Audit</h3>
-            <span className="text-xs text-neutral-600">Release: 2025-01-22.0</span>
-          </div>
-          
-          <div className="bg-neutral-900/50 border border-neutral-800 rounded-xl overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-neutral-950/50 border-b border-neutral-800 text-neutral-400">
-                    <th className="p-4 font-medium">ID</th>
-                    <th className="p-4 font-medium">Theme</th>
-                    <th className="p-4 font-medium">Question Preview</th>
-                    <th className="p-4 font-medium text-center">Def</th>
-                    <th className="p-4 font-medium text-center">V1</th>
-                    <th className="p-4 font-medium text-center">V2</th>
-                    <th className="p-4 font-medium text-center">V3</th>
-                    <th className="p-4 font-medium text-center">V4</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-neutral-800/50">
-                  {[
-                    { id: 'Q1', theme: 'Addr', q: 'Total address records?', scores: [1,1,1,1,1] },
-                    { id: 'Q3', theme: 'Addr', q: 'Top 3 sources for addresses?', scores: [1,1,0,0,0] },
-                    { id: 'Q4', theme: 'Addr', q: 'Postcode coverage %?', scores: [1,1,0,1,0] },
-                    { id: 'Q6', theme: 'Addr', q: 'Level 1 (State) counts?', scores: [1,0,0,1,0] },
-                    { id: 'Q10', theme: 'Bld', q: 'Total architectural records?', scores: [1,1,1,1,1] },
-                    { id: 'Q13', theme: 'Bld', q: 'Height coverage accuracy?', scores: [1,1,0,1,0] },
-                    { id: 'Q16', theme: 'Bld', q: 'Top 5 class values (house...)?', scores: [1,0,0,1,0] },
-                    { id: 'Q20', theme: 'Trans', q: 'Total transport records?', scores: [1,1,1,1,1] },
-                    { id: 'Q23', theme: 'Trans', q: 'Surface/Subtype coverage?', scores: [1,1,0,1,0] },
-                    { id: 'Q33', theme: 'Place', q: 'Top place categories?', scores: [1,1,0,1,0] },
-                    { id: 'Q40', theme: 'Base', q: 'Top class values (tree, stream)?', scores: [1,0,0,1,0] },
-                    { id: 'Q43', theme: 'Div', q: 'Total division boundaries?', scores: [1,1,1,1,1] }
-                  ].map((row) => (
-                    <tr key={row.id} className="hover:bg-neutral-800/20 transition-colors">
-                      <td className="p-4 font-mono text-neutral-500">{row.id}</td>
-                      <td className="p-4">
-                        <span className="px-2 py-0.5 rounded bg-neutral-800 text-neutral-400 text-[10px] uppercase">{row.theme}</span>
-                      </td>
-                      <td className="p-4 text-neutral-300 font-medium">{row.q}</td>
-                      {row.scores.map((s, i) => (
-                        <td key={i} className="p-4 text-center">
-                          {s ? <Check className="w-3.5 h-3.5 text-emerald-500 mx-auto" /> : <div className="w-1.5 h-1.5 rounded-full bg-neutral-800 mx-auto" />}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="p-4 bg-neutral-950/30 border-t border-neutral-800">
-              <p className="text-[10px] text-neutral-600 italic">
-                * This table shows a sample of the 35 audited queries. Full log available in eval/benchmark_results.md.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <footer className="py-12 border-t border-neutral-900 text-center text-neutral-600 text-sm">
-        <p>© 2026 Dashboards are Dead Initiative • Overture Maps Data Intelligence</p>
+        <p>© 2026 Planet-Fetch • Project Terraforma</p>
       </footer>
     </main>
   );
