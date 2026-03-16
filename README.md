@@ -77,5 +77,4 @@ Refer to the documentation folder for detailed instructions on running the pipel
 
 ## Project Structure
 
-Project Structure
 <img width="946" height="552" alt="Screenshot 2026-03-16 at 12 50 44 PM" src="https://github.com/user-attachments/assets/dee8d3f0-44b2-4a04-9f38-3404e76b2060" />
